@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="utf-8">
+        <title>Student Finder</title>
+        <link rel="stylesheet" href="./styles.css" type="text/css">
+    </head>
+    <body>
+        <div id="container">
+            <h2> Locate students in your area </h2>
+            <div id="app"></div>
+        </div>
+    </body>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
+
+     <!-- Creating React Component -->
+     <!-- Dont know how to import React and ReactDom to another file -->
+     <script type="text/babel">
+        var List = React.createClass( {
+            
+            getInitialState: function() {
+                return( {
+                    students: []
+                })
+            },
+
+            render: function() {
+                var students = this.state.students.map( function(student, index) {
+                return(
+                    <li key={index}>
+                        <div className={student.available}></div>
+                        <div className="name"> {student.name} </div>
+                        <div className="idno"> {student.idno} </div>
+                        <div className="distance"> {Math.floor(student.dis/1000)} km </div>
+                    </li>
+                )
+            });
+                return (
+                    <div id="list">
+                        <form id="search" onSubmit={this.handleSubmit}>
+                            <label> Enter longitude: </label>
+                            <input type="text" ref="lng" placeholder="longitude" required/>
+                            <label> Enter latitude: </label>
+                            <input type="text" ref="lat" placeholder="latitude" required/>
+                            <input type="submit" value="Find Students near me"/>
+                        </form>
+                        <ul>
+                            {students}
+                        </ul>
+                    </div>
+                )
+            },
+            handleSubmit: function(e) {
+                e.preventDefault();
+                var lng = this.refs.lng.value;
+                var lat = this.refs.lat.value;
+                fetch('/api/students?lng='+lng+'&lat='+lat).then(
+                    function(data) {
+                        return data.json();
+                    }
+                ).then(json => this.setState({
+                    students: json
+                })); 
+            }
+        });
+
+        ReactDOM.render(< List />, document.getElementById('app'));
+        
+     </script>
+</html>

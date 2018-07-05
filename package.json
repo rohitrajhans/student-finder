@@ -1,0 +1,17 @@
+{
+  "name": "mongo-tut",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rohit",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "jshint": "^2.9.5",
+    "mongoose": "^5.2.1"
+  }
+}
