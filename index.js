@@ -9,7 +9,7 @@ const app = express();
 mongoose.connect('mongodb://localhost/school');
 mongoose.Promise = global.Promise;
 
-//To serve statisc files from public folder
+//To serve static files from public folder
 app.use(express.static('public'));
 
 app.use(bodyParser.json());
